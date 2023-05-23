@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Agricultural Mobile Application For Farmers</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_profile">Profile</string>
+
+    <string name="first_name_label">First Name: %s</string>
+    <string name="last_name_label">Last Name: %s</string>
+    <string name="email_label">Email: %s</string>
+    <string name="date_created_label">Date Created: %s</string>
+
+</resources>

@@ -1,0 +1,26 @@
+Java/Android Studio, June 40%
+image, user info, other data will be saved to database
+PSU pangasinan
+
+
+logo
+AMAF
+Agricultural Mobile Application For Farmers
+
+Identify objects via image recognition : Mais, Palay, Sibuyas
+
+Welcome slides
+
+Login page with logo(google, email-password)
+
+selection of user planting : garden, pots, fields
+
+User can select up to 5 crops
+
+can take/upload an image
+
+after uploading/capture :
+	image is valid
+		-> Show information page about the identified planting
+	invalid
+		->show invalid message box at the bottom
