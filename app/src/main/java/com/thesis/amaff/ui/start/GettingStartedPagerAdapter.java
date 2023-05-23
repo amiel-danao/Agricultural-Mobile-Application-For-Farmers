@@ -18,17 +18,17 @@ public class GettingStartedPagerAdapter extends PagerAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
 
-    private int[] slideImages = {
+    private final int[] slideImages = {
             R.drawable.slide1,
-            R.drawable.slide1,
-            R.drawable.slide1,
-            R.drawable.slide1
+            R.drawable.slide2,
+            R.drawable.slide3,
+            R.drawable.slide4
     };
-    private String[] slideCaptions = {
+    private final String[] slideCaptions = {
             "Instant Disease Detection",
-            "Instant Disease Detection",
-            "Instant Disease Detection",
-            "Instant Disease Detection",
+            "Great Product Deals",
+            "Supportive Farming Community",
+            "Helpful Growing Tips",
     };
 
     public GettingStartedPagerAdapter(Context context) {

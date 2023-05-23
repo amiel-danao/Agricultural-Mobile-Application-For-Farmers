@@ -150,6 +150,8 @@ public class LoginActivity extends AppCompatActivity {
                                             if (userProfile != null) {
                                                 // User has an existing profile
                                                 // Add your logic for handling the existing profile
+                                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
                                             } else {
                                                 // User does not have a profile, create one
                                                 createProfile(user);
