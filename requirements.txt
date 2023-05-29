@@ -24,3 +24,22 @@ after uploading/capture :
 		-> Show information page about the identified planting
 	invalid
 		->show invalid message box at the bottom
+		
+		
+deadline 19 = 50%
+
+website admin
+
+login/signup of admin
+
+dashboard ->
+	homepage ->
+	user names ->
+	user gender percentage ->
+	crops details ->
+	about ->
+	
+App
+	profile
+	dashboard
+	homepage
