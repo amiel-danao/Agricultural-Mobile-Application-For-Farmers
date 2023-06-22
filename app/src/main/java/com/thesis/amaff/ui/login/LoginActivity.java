@@ -1,7 +1,8 @@
 package com.thesis.amaff.ui.login;
 
+import static com.thesis.amaff.utilities.Constants.PROFILE_COLLECTION;
+
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -28,7 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.thesis.amaff.ui.models.UserProfile;
+import com.thesis.amaff.models.UserProfile;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -214,20 +215,17 @@ public class LoginActivity extends AppCompatActivity {
         userProfile.setDateCreated(Timestamp.now()); // Set the current timestamp
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference profilesCollectionRef = db.collection("Profiles");
+        CollectionReference profilesCollectionRef = db.collection(PROFILE_COLLECTION);
 
         // Set the document with the user's UID as the document key
         profilesCollectionRef.document(uid)
                 .set(userProfile)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // Profile creation success
+                .addOnSuccessListener(aVoid -> {
+                    // Profile creation success
 //                        Toast.makeText(LoginActivity.this, "Profile created successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish(); // Finish the LoginActivity to prevent going back to it
-                        // Add your logic for handling the profile creation, such as navigating to another activity
-                    }
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish(); // Finish the LoginActivity to prevent going back to it
+                    // Add your logic for handling the profile creation, such as navigating to another activity
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override

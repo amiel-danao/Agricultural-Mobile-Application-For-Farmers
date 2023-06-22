@@ -4,7 +4,7 @@ PSU pangasinan
 
 
 logo
-AMAF
+AMAFF
 Agricultural Mobile Application For Farmers
 
 Identify objects via image recognition : Mais, Palay, Sibuyas
@@ -26,11 +26,15 @@ after uploading/capture :
 		->show invalid message box at the bottom
 		
 		
-deadline 19 = 50%
+deadline June 19 = 50%
 
 website admin
 
-login/signup of admin
+[DONE]login/signup of admin using mobile number
+	-> for the sign in to be successful, the mobile number should send OTP code
+	-> if the OTP code is correct then proceed
+	-> check if the mobile number is in the Admin collection
+	-> if the above conditions are met, then the user should be redirected to homepage
 
 dashboard ->
 	homepage ->
@@ -40,6 +44,20 @@ dashboard ->
 	about ->
 	
 App
-	profile
-	dashboard
-	homepage
+	[OK]profile -> Edit profile[]
+	[OK]dashboard -> crops list[+1%]
+	[OK]homepage -> weather[+2%]
+	
+[DONE] verify user if farmer, using mobile no
+
+
+
+
+
+revision
+Web admin:
+remove user line graph and replace with bar graph of crops[+1%]
+[OK]add number of crops input field[+1%]
+add crop text instead of save changes[]
+add delete function[]
+add weather edit page[+2%]

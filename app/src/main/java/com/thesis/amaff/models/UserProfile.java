@@ -1,12 +1,12 @@
-package com.thesis.amaff.ui.models;
+package com.thesis.amaff.models;
 
 import com.google.firebase.Timestamp;
 
 public class UserProfile {
     private String email;
     private String uid;
-    private String firstName;
-    private String lastName;
+    private String firstName = "";
+    private String lastName = "";
     private Timestamp dateCreated;
 
     public UserProfile() {

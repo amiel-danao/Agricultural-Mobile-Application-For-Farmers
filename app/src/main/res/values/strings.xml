@@ -8,5 +8,12 @@
     <string name="last_name_label">Last Name: %s</string>
     <string name="email_label">Email: %s</string>
     <string name="date_created_label">Date Created: %s</string>
+    <string name="last_name">Last name</string>
+    <string name="first_name">First name</string>
+    <string name="save_profile">Save Profile</string>
+    <string name="welcome">Welcome</string>
+    <string name="current_weather">Current weather today</string>
+    <string name="temperature">Temperature</string>
+    <string name="crop_list">Crop List</string>
 
 </resources>
