@@ -1,10 +1,16 @@
 package com.thesis.amaff.ui;
 
 import static com.thesis.amaff.utilities.Constants.PROFILE_COLLECTION;
+
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -13,11 +19,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
+import com.thesis.amaff.MainActivity;
 import com.thesis.amaff.models.UserProfile;
 
 public abstract class RequireLoginFragment extends Fragment {
     protected UserProfile profile;
     private FirebaseAuth firebaseAuth;
+    protected String pageTitle = "";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,6 +37,14 @@ public abstract class RequireLoginFragment extends Fragment {
         }
 
         fetchUserData();
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        actionBar.setTitle(pageTitle);
     }
 
     @Override
@@ -48,6 +64,7 @@ public abstract class RequireLoginFragment extends Fragment {
             }
         });
     }
+
 
 
     public void onFetchedUser(){

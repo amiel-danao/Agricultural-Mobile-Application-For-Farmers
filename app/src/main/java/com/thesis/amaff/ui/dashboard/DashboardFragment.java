@@ -56,14 +56,15 @@ public class DashboardFragment extends RequireLoginFragment {
     }
 
     private void fetchCropsFromFirestore() {
+        cropList.clear();
         firestore.collection("Crops").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                     Crop crop = documentSnapshot.toObject(Crop.class);
                     cropList.add(crop);
+                    cropAdapter.notifyItemInserted(cropList.size());
                 }
-                cropAdapter.notifyDataSetChanged();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

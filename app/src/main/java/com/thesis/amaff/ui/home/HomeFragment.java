@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,14 +23,16 @@ import com.thesis.amaff.databinding.FragmentHomeBinding;
 import com.thesis.amaff.models.Weather;
 import com.thesis.amaff.ui.RequireLoginFragment;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class HomeFragment extends RequireLoginFragment {
 
     private FragmentHomeBinding binding;
     private String weatherDocumentKey = "weather";
     HashMap<String, Integer> weatherIconMap = new HashMap<>();
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,14 +52,29 @@ public class HomeFragment extends RequireLoginFragment {
         fetchWeather();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        pageTitle = getString(R.string.app_short_name);
+        super.onViewCreated(view, savedInstanceState);
+    }
+
     private void fetchWeather() {
         FirebaseFirestore.getInstance().collection(SETTINGS_COLLECTION).document(weatherDocumentKey).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
                     Weather weather = task.getResult().toObject(Weather.class);
-                    binding.textWeatherStatus.setText(String.format("%s \n%s \n%s:%s", getString(R.string.current_weather), weather.status, getString(R.string.temperature),weather.temperature));
+                    // Create a Date object with the desired date
+                    Date date = new Date();
 
+                    // Create a SimpleDateFormat object with the desired format
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
+
+                    // Format the date using the SimpleDateFormat object
+                    String formattedDate = dateFormat.format(date);
+                    binding.textHome.setText(String.format("%s, %s", getString(R.string.today), formattedDate));
+                    binding.textWeatherStatus.setText(String.format("%s%sC", weather.temperature, getString(R.string.degree_sign)));
+                    binding.textStatus.setText(weather.status);
                     // Check if the weather condition exists in the mapping and update the icon
                     if (weatherIconMap.containsKey(weather.status)) {
                         int iconResource = weatherIconMap.get(weather.status);
