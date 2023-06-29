@@ -1,23 +1,28 @@
 package com.thesis.amaff.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.thesis.amaff.R;
 import com.thesis.amaff.models.Crop;
 
 import java.util.List;
 
 public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder> {
-    private List<Crop> cropList;
+    private final List<Crop> cropList;
+    private final Context context;
 
-    public CropAdapter(List<Crop> cropList) {
+    public CropAdapter(List<Crop> cropList, Context context) {
         this.cropList = cropList;
+        this.context = context;
     }
 
     @NonNull
@@ -30,7 +35,7 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
     @Override
     public void onBindViewHolder(@NonNull CropViewHolder holder, int position) {
         Crop crop = cropList.get(position);
-        holder.bind(crop);
+        holder.bind(context, crop);
     }
 
     @Override
@@ -39,21 +44,31 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
     }
 
     public static class CropViewHolder extends RecyclerView.ViewHolder {
-        private TextView nameTextView;
-        private TextView descriptionTextView;
-        private TextView countTextView;
+        private final TextView nameTextView;
+        private final TextView descriptionTextView;
+        private final TextView variationText;
+        private final ImageView cropImage;
 
         public CropViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.nameTextView);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
-            countTextView = itemView.findViewById(R.id.countTextView);
+            variationText = itemView.findViewById(R.id.variationText);
+            cropImage = itemView.findViewById(R.id.cropImage);
         }
 
-        public void bind(Crop crop) {
+        public void bind(Context context, Crop crop) {
+            Glide.with(context).load(crop.getIconUrl()).into(cropImage);
             nameTextView.setText(crop.getName());
             descriptionTextView.setText(crop.getDescription());
-            countTextView.setText(String.valueOf(crop.getCount()));
+            if(!crop.getVariety().isEmpty()) {
+                variationText.setText(String.format("Variation: %s", crop.getVariety()
+                ));
+            }
+            else{
+                variationText.setText("");
+            }
+
         }
     }
 }

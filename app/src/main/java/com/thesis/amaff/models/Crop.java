@@ -1,9 +1,14 @@
 package com.thesis.amaff.models;
 
+import java.util.List;
+
 public class Crop {
     private String name;
     private String description;
+    private String variety = "";
     private int count;
+    private List<String> variation;
+    private String iconUrl;
 
     public Crop() {
         // Empty constructor required for Firestore
@@ -40,5 +45,29 @@ public class Crop {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public List<String> getVariation() {
+        return variation;
+    }
+
+    public void setVariation(List<String> variety) {
+        this.variation = variety;
+    }
+
+    public String getVariety() {
+        return variety;
+    }
+
+    public void setVariety(String variety) {
+        this.variety = variety;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
     }
 }

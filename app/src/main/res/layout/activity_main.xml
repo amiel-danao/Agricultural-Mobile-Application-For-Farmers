@@ -29,7 +29,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:subtitleTextColor="#FFFFFF"
-        app:titleTextColor="#FFFFFF" />
+        app:title="@string/app_short_name"
+        app:titleTextColor="@color/black" />
 
     <fragment
         android:id="@+id/nav_host_fragment_activity_main"

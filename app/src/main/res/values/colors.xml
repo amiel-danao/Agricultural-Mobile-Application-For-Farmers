@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="semi_transparent_white">#85FFFFFF</color>
     <color name="light_gray">#E4E4E4</color>
+    <color name="pink">#FF9E97</color>
 </resources>

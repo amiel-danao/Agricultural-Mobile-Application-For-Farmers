@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,12 +14,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.thesis.amaff.R;
+import com.thesis.amaff.adapters.SampleFragmentPagerAdapter;
 import com.thesis.amaff.databinding.FragmentHomeBinding;
 import com.thesis.amaff.models.Weather;
 import com.thesis.amaff.ui.RequireLoginFragment;
@@ -43,7 +47,15 @@ public class HomeFragment extends RequireLoginFragment {
     @Override
     public void onFetchedUser() {
         super.onFetchedUser();
-        binding.textHome.setText(String.format("%s %s %s", getString(R.string.welcome), profile.getFirstName(), profile.getLastName()));
+        // Create a Date object with the desired date
+        Date date = new Date();
+
+        // Create a SimpleDateFormat object with the desired format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
+
+        // Format the date using the SimpleDateFormat object
+        String formattedDate = dateFormat.format(date);
+        binding.textHome.setText(String.format("%s, %s", getString(R.string.today), formattedDate));
         weatherIconMap.put("sunny", R.drawable.sunny);
         weatherIconMap.put("cloudy", R.drawable.cloudy);
         weatherIconMap.put("rainy", R.drawable.rainy);
@@ -54,8 +66,22 @@ public class HomeFragment extends RequireLoginFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        pageTitle = getString(R.string.app_short_name);
+        pageTitle = getString(R.string.title_home);
         super.onViewCreated(view, savedInstanceState);
+
+        SampleFragmentPagerAdapter myAdapter = new SampleFragmentPagerAdapter(getChildFragmentManager(), getLifecycle(), requireContext());
+
+        // add Fragments in your ViewPagerFragmentAdapter class
+//        myAdapter.addFragment(new HomeFragment());
+
+        // set Orientation in your ViewPager2
+        binding.viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        binding.viewPager.setUserInputEnabled(false);
+        binding.viewPager.setAdapter(myAdapter);
+        for (int i = 0; i < binding.tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = binding.tabLayout.getTabAt(i);
+            tab.setCustomView(myAdapter.getTabView(i));
+        }
     }
 
     private void fetchWeather() {
@@ -64,15 +90,7 @@ public class HomeFragment extends RequireLoginFragment {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
                     Weather weather = task.getResult().toObject(Weather.class);
-                    // Create a Date object with the desired date
-                    Date date = new Date();
 
-                    // Create a SimpleDateFormat object with the desired format
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
-
-                    // Format the date using the SimpleDateFormat object
-                    String formattedDate = dateFormat.format(date);
-                    binding.textHome.setText(String.format("%s, %s", getString(R.string.today), formattedDate));
                     binding.textWeatherStatus.setText(String.format("%s%sC", weather.temperature, getString(R.string.degree_sign)));
                     binding.textStatus.setText(weather.status);
                     // Check if the weather condition exists in the mapping and update the icon

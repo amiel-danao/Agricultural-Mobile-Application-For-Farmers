@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.thesis.amaff.R;
 import com.thesis.amaff.adapters.CropAdapter;
 import com.thesis.amaff.databinding.FragmentDashboardBinding;
 import com.thesis.amaff.models.Crop;
@@ -44,11 +46,17 @@ public class DashboardFragment extends RequireLoginFragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        pageTitle = getString(R.string.your_crops);
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
     public void onFetchedUser() {
         super.onFetchedUser();
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         cropList = new ArrayList<>();
-        cropAdapter = new CropAdapter(cropList);
+        cropAdapter = new CropAdapter(cropList, requireContext());
         binding.recyclerView.setAdapter(cropAdapter);
 
         firestore = FirebaseFirestore.getInstance();
@@ -56,22 +64,31 @@ public class DashboardFragment extends RequireLoginFragment {
     }
 
     private void fetchCropsFromFirestore() {
-        cropList.clear();
-        firestore.collection("Crops").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                    Crop crop = documentSnapshot.toObject(Crop.class);
-                    cropList.add(crop);
-                    cropAdapter.notifyItemInserted(cropList.size());
+        firestore.collection("Crops").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            cropList.clear();
+            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                Crop crop = documentSnapshot.toObject(Crop.class);
+                if(crop.getVariation().isEmpty()){
+                    if (!cropList.contains(crop)) {
+                        cropList.add(crop);
+                        cropAdapter.notifyItemInserted(cropList.size());
+                    }
                 }
+                else {
+                    for (String variation :
+                            crop.getVariation()) {
+                        Crop cropVariety = new Crop();
+                        cropVariety.setName(crop.getName());
+                        cropVariety.setDescription(crop.getDescription());
+                        cropVariety.setVariety(variation);
+                        cropVariety.setIconUrl(crop.getIconUrl());
+                        cropList.add(cropVariety);
+                        cropAdapter.notifyItemInserted(cropList.size());
+                    }
+                }
+
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("Firestore", "Error fetching crops: " + e.getMessage());
-            }
-        });
+        }).addOnFailureListener(e -> Log.e("Firestore", "Error fetching crops: " + e.getMessage()));
     }
 
     @Override

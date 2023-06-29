@@ -73,6 +73,7 @@ public class ProfileFragment extends RequireLoginFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        pageTitle = getString(R.string.profile);
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonSaveProfile.setOnClickListener(v -> {

@@ -27,12 +27,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         setSupportActionBar(binding.myToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setContentView(binding.getRoot());
-
-
+        binding.myToolbar.setTitle(getString(R.string.app_short_name));
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -44,13 +44,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() == null){
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    finish();
-                }
+
+
+        FirebaseAuth.getInstance().addAuthStateListener(firebaseAuth -> {
+            if(firebaseAuth.getCurrentUser() == null){
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
             }
         });
     }

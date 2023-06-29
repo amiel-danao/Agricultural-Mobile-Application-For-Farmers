@@ -56,8 +56,9 @@ App
 
 revision
 Web admin:
-remove user line graph and replace with bar graph of crops[+1%]
+[OK]add crop variation
+[OK]remove user line graph and replace with bar graph of crops[+1%]
 [OK]add number of crops input field[+1%]
-add crop text instead of save changes[]
-add delete function[]
-add weather edit page[+2%]
+[OK]add crop text instead of save changes[]
+[OK]add delete function[]
+[OK]add weather edit page[+2%]

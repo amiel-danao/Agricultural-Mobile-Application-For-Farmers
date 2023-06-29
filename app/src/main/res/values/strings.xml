@@ -24,5 +24,7 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="today">Today</string>
+    <string name="your_crops">Your Crops</string>
+    <string name="profile">Profile</string>
 
 </resources>
