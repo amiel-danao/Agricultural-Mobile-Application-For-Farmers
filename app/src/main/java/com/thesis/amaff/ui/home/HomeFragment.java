@@ -44,25 +44,7 @@ public class HomeFragment extends RequireLoginFragment {
         return binding.getRoot();
     }
 
-    @Override
-    public void onFetchedUser() {
-        super.onFetchedUser();
-        // Create a Date object with the desired date
-        Date date = new Date();
 
-        // Create a SimpleDateFormat object with the desired format
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
-
-        // Format the date using the SimpleDateFormat object
-        String formattedDate = dateFormat.format(date);
-        binding.textHome.setText(String.format("%s, %s", getString(R.string.today), formattedDate));
-        weatherIconMap.put("sunny", R.drawable.sunny);
-        weatherIconMap.put("cloudy", R.drawable.cloudy);
-        weatherIconMap.put("rainy", R.drawable.rainy);
-// Add more weather conditions and icons as needed
-
-        fetchWeather();
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -82,31 +64,6 @@ public class HomeFragment extends RequireLoginFragment {
             TabLayout.Tab tab = binding.tabLayout.getTabAt(i);
             tab.setCustomView(myAdapter.getTabView(i));
         }
-    }
-
-    private void fetchWeather() {
-        FirebaseFirestore.getInstance().collection(SETTINGS_COLLECTION).document(weatherDocumentKey).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    Weather weather = task.getResult().toObject(Weather.class);
-
-                    binding.textWeatherStatus.setText(String.format("%s%sC", weather.temperature, getString(R.string.degree_sign)));
-                    binding.textStatus.setText(weather.status);
-                    // Check if the weather condition exists in the mapping and update the icon
-                    if (weatherIconMap.containsKey(weather.status)) {
-                        int iconResource = weatherIconMap.get(weather.status);
-                        binding.weatherIconImageView.setImageResource(iconResource);
-                    } else {
-                        // Default icon or placeholder for unknown conditions
-                        binding.weatherIconImageView.setImageResource(R.drawable.baseline_error_24);
-                    }
-                }
-                else{
-                    Toast.makeText(requireContext(), "Error fetching weather data!", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
     }
 
     @Override

@@ -10,6 +10,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -17,11 +19,14 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.thesis.amaff.databinding.ActivityMainBinding;
+import com.thesis.amaff.models.Weather;
+import com.thesis.amaff.ui.home.WeatherFragment;
 import com.thesis.amaff.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_profile)
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_profile, R.id.navigation_weather)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
@@ -69,10 +74,17 @@ public class MainActivity extends AppCompatActivity {
             // For example, sign out the user
             FirebaseAuth.getInstance().signOut();
             // Redirect to login or any other desired action
-             // Optional: Close the current activity
+            // Optional: Close the current activity
+            return true;
+        } else if (id == R.id.action_weather) {
+            navController.navigate(R.id.navigation_weather);
+
+            if (navController.getCurrentDestination().getId() == R.id.navigation_home){
+                finish();
+            }
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
+
 }
