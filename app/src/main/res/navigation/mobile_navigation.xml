@@ -9,26 +9,27 @@
         android:id="@+id/navigation_home"
         android:name="com.thesis.amaff.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
-    </fragment>
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.thesis.amaff.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" >
-    </fragment>
+        tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.thesis.amaff.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" >
-    </fragment>
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/navigation_weather"
-        android:name="com.thesis.amaff.ui.home.WeatherFragment"
+        android:name="com.thesis.amaff.WeatherFragment"
         android:label="@string/title_weather"
-        tools:layout="@layout/fragment_weather" >
-    </fragment>
+        tools:layout="@layout/fragment_weather" />
+    <fragment
+        android:id="@+id/navigation_about"
+        android:name="com.thesis.amaff.AboutFragment"
+        android:label="@string/title_about"
+        tools:layout="@layout/fragment_about" />
 </navigation>

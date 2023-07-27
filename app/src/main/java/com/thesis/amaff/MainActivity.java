@@ -10,20 +10,20 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.thesis.amaff.databinding.ActivityMainBinding;
-import com.thesis.amaff.models.Weather;
-import com.thesis.amaff.ui.home.WeatherFragment;
+import com.thesis.amaff.ui.dashboard.DashboardFragment;
+import com.thesis.amaff.ui.home.HomeFragment;
 import com.thesis.amaff.ui.login.LoginActivity;
+import com.thesis.amaff.ui.profile.ProfileFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     private ActivityMainBinding binding;
     private NavController navController;
@@ -39,25 +39,26 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         binding.myToolbar.setTitle(getString(R.string.app_short_name));
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_profile, R.id.navigation_weather)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-
+        binding.navView.setOnItemSelectedListener(this);
 
         FirebaseAuth.getInstance().addAuthStateListener(firebaseAuth -> {
-            if(firebaseAuth.getCurrentUser() == null){
+            if (firebaseAuth.getCurrentUser() == null) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 finish();
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,16 +76,34 @@ public class MainActivity extends AppCompatActivity {
             FirebaseAuth.getInstance().signOut();
             // Redirect to login or any other desired action
             // Optional: Close the current activity
-            return true;
         } else if (id == R.id.action_weather) {
             navController.navigate(R.id.navigation_weather);
-
-            if (navController.getCurrentDestination().getId() == R.id.navigation_home){
-                finish();
-            }
-            return true;
+        } else {
+            navController.navigate(R.id.navigation_about);
         }
+
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.navigation_home:
+                navController.navigate(R.id.navigation_home);
+                return true;
+            case R.id.navigation_dashboard:
+                navController.navigate(R.id.navigation_dashboard);
+                return true;
+            case R.id.navigation_profile:
+                navController.navigate(R.id.navigation_profile);
+                return true;
+            case R.id.navigation_weather:
+                navController.navigate(R.id.navigation_weather);
+                return true;
+            case R.id.navigation_about:
+                navController.navigate(R.id.navigation_about);
+                return true;
+        }
+        return false;
+    }
 }

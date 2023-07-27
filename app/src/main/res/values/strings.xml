@@ -5,6 +5,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profile">Profile</string>
     <string name="title_weather">Weather</string>
+    <string name="title_about">About</string>
 
     <string name="first_name_label">First Name: %s</string>
     <string name="last_name_label">Last Name: %s</string>

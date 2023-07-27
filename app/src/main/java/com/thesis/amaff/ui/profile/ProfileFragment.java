@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +31,7 @@ public class ProfileFragment extends RequireLoginFragment {
 
     private FragmentProfileBinding binding;
     private ProfileViewModel profileViewModel;
+    private NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -73,8 +76,9 @@ public class ProfileFragment extends RequireLoginFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        pageTitle = getString(R.string.profile);
         super.onViewCreated(view, savedInstanceState);
+        pageTitle = getString(R.string.profile);
+
 
         binding.buttonSaveProfile.setOnClickListener(v -> {
             if(!formIsValid())
@@ -114,6 +118,8 @@ public class ProfileFragment extends RequireLoginFragment {
     @Override
     public void onFetchedUser() {
         super.onFetchedUser();
+        if (binding == null)
+            return;
         String emailText = getString(R.string.email_label, profile.getEmail());
         binding.textEmail.setText(emailText);
 

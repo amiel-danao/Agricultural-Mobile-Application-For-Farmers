@@ -34,13 +34,7 @@ public abstract class RequireLoginFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        firebaseAuth = FirebaseAuth.getInstance();
 
-        if(firebaseAuth.getCurrentUser() == null){
-            return;
-        }
-
-        fetchUserData();
 
     }
 
@@ -52,6 +46,13 @@ public abstract class RequireLoginFragment extends Fragment {
         if(toolbar != null)
             toolbar.setTitle(pageTitle);
 //        actionBar.setTitle(pageTitle);
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        if(firebaseAuth.getCurrentUser() == null){
+            return;
+        }
+
+        fetchUserData();
     }
 
     @Override
