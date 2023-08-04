@@ -10,4 +10,14 @@
     <color name="semi_transparent_white">#85FFFFFF</color>
     <color name="light_gray">#E4E4E4</color>
     <color name="pink">#FF9E97</color>
+
+    <!-- TF Branding Orange -->
+    <color name="bounding_box_color">#FF6F00</color>
+    <color name="toolbar_background">#EEEEEE</color>
+    <color name="ic_launcher_background">#FFFFFF</color>
+    <color name="bottom_sheet_background">#EEEEEE</color>
+    <color name="bottom_sheet_text_color">@android:color/black</color>
+    <color name="icActive">#FFFFFFFF</color>
+    <color name="icFocused">#DDFFFFFF</color>
+    <color name="icPressed">#AAFFFFFF</color>
 </resources>
