@@ -25,12 +25,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.thesis.amaff.databinding.ItemClassificationResultBinding;
 
+import org.tensorflow.lite.support.label.Category;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import org.tensorflow.lite.support.label.Category;
 
 /** Adapter for displaying the list of classifications for the image */
 public class ClassificationResultAdapter
