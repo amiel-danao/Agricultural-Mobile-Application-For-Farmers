@@ -46,7 +46,8 @@ public class ClassificationResultAdapter
         Collections.sort(sortedCategories, new Comparator<Category>() {
             @Override
             public int compare(Category category1, Category category2) {
-                return category1.getIndex() - category2.getIndex();
+//                return category1.getIndex() - category2.getIndex();
+                return Float.compare(category2.getScore(), category1.getScore());
             }
         });
         this.categories = new ArrayList<>(Collections.nCopies(adapterSize, null));
