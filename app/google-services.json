@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "119535848870",
-    "project_id": "agriculturescan",
-    "storage_bucket": "agriculturescan.appspot.com"
+    "project_number": "112125727173",
+    "project_id": "agriculture-scan",
+    "storage_bucket": "agriculture-scan.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:119535848870:android:cab159dd91dc940786d367",
+        "mobilesdk_app_id": "1:112125727173:android:b29975d8b672407d0efbac",
         "android_client_info": {
           "package_name": "com.thesis.amaff"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "119535848870-tapq0ub80ilrv836sj61j969o4h4qjtu.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.thesis.amaff",
-            "certificate_hash": "1aaf6b7f8f5247addb3f68644e5203eee5fb886c"
-          }
-        },
-        {
-          "client_id": "119535848870-ef1as0eo3m8mq2l04ffj24tlntd0p8ep.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDJ95pmt6BFK_VRqU_iw9BftEXvvlo5Tv0"
+          "current_key": "AIzaSyCWPkWfMDtJNeJ-VYFCBZcIvyh8B6ZmClc"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "119535848870-ef1as0eo3m8mq2l04ffj24tlntd0p8ep.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

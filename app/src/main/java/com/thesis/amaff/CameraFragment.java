@@ -362,6 +362,8 @@ public class CameraFragment extends Fragment
 
     @Override
     public void onResults(List<Classifications> results, long inferenceTime) {
+        if(!isAdded()) return;
+
         requireActivity().runOnUiThread(() -> {
             classificationResultsAdapter.updateResults(results.get(0).getCategories());
             fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal
