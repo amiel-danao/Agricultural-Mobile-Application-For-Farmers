@@ -51,7 +51,7 @@ public class ClassificationResultAdapter
             }
         });
         this.categories = new ArrayList<>(Collections.nCopies(adapterSize, null));
-        int min = Math.min(sortedCategories.size(), adapterSize);
+        int min = Math.min(sortedCategories.size(), 1);
         for (int i = 0; i < min; i++) {
             this.categories.set(i, sortedCategories.get(i));
         }
@@ -77,7 +77,7 @@ public class ClassificationResultAdapter
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        return Math.min(1, categories.size());
     }
 
     /** Data structure for items in list */

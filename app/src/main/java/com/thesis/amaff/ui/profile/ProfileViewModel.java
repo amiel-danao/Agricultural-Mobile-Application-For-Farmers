@@ -8,11 +8,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
-import com.thesis.amaff.models.UserProfile;
+import com.thesis.amaff.models.Employee;
 
 public class ProfileViewModel extends ViewModel {
 
-    private final MutableLiveData<UserProfile> userProfile = new MutableLiveData<>();
+    private final MutableLiveData<Employee> userProfile = new MutableLiveData<>();
     private ListenerRegistration profileListener;
 
     public ProfileViewModel() {
@@ -20,7 +20,7 @@ public class ProfileViewModel extends ViewModel {
         startProfileListener();
     }
 
-    public LiveData<UserProfile> getUserProfile() {
+    public LiveData<Employee> getUserProfile() {
         return userProfile;
     }
 
@@ -39,7 +39,7 @@ public class ProfileViewModel extends ViewModel {
 
                         if (snapshot != null && snapshot.exists()) {
                             // Retrieve the profile data from the document snapshot
-                            UserProfile profile = snapshot.toObject(UserProfile.class);
+                            Employee profile = snapshot.toObject(Employee.class);
                             userProfile.setValue(profile);
                         } else {
                             // Document doesn't exist or is empty, clear the profile data

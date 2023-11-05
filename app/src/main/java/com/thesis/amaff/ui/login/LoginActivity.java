@@ -1,6 +1,6 @@
 package com.thesis.amaff.ui.login;
 
-import static com.thesis.amaff.utilities.Constants.PROFILE_COLLECTION;
+import static com.thesis.amaff.utilities.Constants.EMPLOYEES_COLLECTION;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.Timestamp;
@@ -29,7 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.thesis.amaff.models.UserProfile;
+import com.thesis.amaff.models.Employee;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -147,8 +147,8 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                         if (task.isSuccessful()) {
-                                            UserProfile userProfile = task.getResult().toObject(UserProfile.class);
-                                            if (userProfile != null) {
+                                            Employee employee = task.getResult().toObject(Employee.class);
+                                            if (employee != null) {
                                                 // User has an existing profile
                                                 // Add your logic for handling the existing profile
                                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                                             }
                                         } else {
                                             // Error getting profiles collection
-                                            Toast.makeText(LoginActivity.this, "Failed to get profiles. Please try again.", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LoginActivity.this, "Failed to get profiles. Please try again.\n" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
@@ -209,17 +209,17 @@ public class LoginActivity extends AppCompatActivity {
         // You can prompt the user to enter their first name and last name if needed
 
         // Create a new UserProfile instance
-        UserProfile userProfile = new UserProfile();
-        userProfile.setEmail(email);
-        userProfile.setUid(uid);
-        userProfile.setDateCreated(Timestamp.now()); // Set the current timestamp
+        Employee employee = new Employee();
+        employee.setEmail(email);
+        employee.setUid(uid);
+        employee.setDateCreated(Timestamp.now()); // Set the current timestamp
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference profilesCollectionRef = db.collection(PROFILE_COLLECTION);
+        CollectionReference profilesCollectionRef = db.collection(EMPLOYEES_COLLECTION);
 
         // Set the document with the user's UID as the document key
         profilesCollectionRef.document(uid)
-                .set(userProfile)
+                .set(employee)
                 .addOnSuccessListener(aVoid -> {
                     // Profile creation success
 //                        Toast.makeText(LoginActivity.this, "Profile created successfully", Toast.LENGTH_SHORT).show();
@@ -257,10 +257,16 @@ public class LoginActivity extends AppCompatActivity {
                                             // Email sent successfully
                                             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                                             builder.setMessage("Verification email sent. Please check your email.").show();
+
                                         } else {
                                             // Email sending failed
                                             Toast.makeText(LoginActivity.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
                                         }
+
+                                        registrationForm.setVisibility(View.GONE);
+                                        loginButton.setVisibility(View.VISIBLE);
+                                        registerButton.setVisibility(View.VISIBLE);
+                                        registerLabel.setVisibility(View.VISIBLE);
                                     }
                                 });
                             }

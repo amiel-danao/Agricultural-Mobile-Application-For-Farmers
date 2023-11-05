@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:padding="5dp"
     tools:context=".ui.profile.ProfileFragment">
 
@@ -53,6 +54,17 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:hint="@string/last_name"
+                    android:minHeight="48dp" />
+
+                <EditText
+                    android:id="@+id/text_mobile_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:hint="@string/mobile_number"
+                    android:inputType="phone"
                     android:minHeight="48dp" />
 
                 <TextView

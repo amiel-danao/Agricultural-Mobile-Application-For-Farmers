@@ -5,27 +5,30 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.thesis.amaff.ApiService;
 import com.thesis.amaff.R;
 import com.thesis.amaff.adapters.CropAdapter;
 import com.thesis.amaff.databinding.FragmentDashboardBinding;
 import com.thesis.amaff.models.Crop;
 import com.thesis.amaff.ui.RequireLoginFragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DashboardFragment extends RequireLoginFragment {
 
@@ -59,36 +62,46 @@ public class DashboardFragment extends RequireLoginFragment {
         cropAdapter = new CropAdapter(cropList, requireContext());
         binding.recyclerView.setAdapter(cropAdapter);
 
-        firestore = FirebaseFirestore.getInstance();
-        fetchCropsFromFirestore();
+//        firestore = FirebaseFirestore.getInstance();
+        fetchCropsFromServer();
     }
 
-    private void fetchCropsFromFirestore() {
-        firestore.collection("Crops").get().addOnSuccessListener(queryDocumentSnapshots -> {
-            cropList.clear();
-            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                Crop crop = documentSnapshot.toObject(Crop.class);
-                if(crop.getVariation().isEmpty()){
-                    if (!cropList.contains(crop)) {
-                        cropList.add(crop);
-                        cropAdapter.notifyItemInserted(cropList.size());
-                    }
-                }
-                else {
-                    for (String variation :
-                            crop.getVariation()) {
-                        Crop cropVariety = new Crop();
-                        cropVariety.setName(crop.getName());
-                        cropVariety.setDescription(crop.getDescription());
-                        cropVariety.setVariety(variation);
-                        cropVariety.setIconUrl(crop.getIconUrl());
-                        cropList.add(cropVariety);
-                        cropAdapter.notifyItemInserted(cropList.size());
-                    }
-                }
+    private void fetchCropsFromServer() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://amaff-dce3f29acc84.herokuapp.com/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
+        ApiService apiService = retrofit.create(ApiService.class);
+
+        // Make the API request
+        Call<List<Crop>> call = apiService.getCrops("");
+        call.enqueue(new Callback<List<Crop>>() {
+            @Override
+            public void onResponse(Call<List<Crop>> call, Response<List<Crop>> response) {
+                if (response.isSuccessful()) {
+                    cropList.clear();
+                    List<Crop> crops = response.body();
+//                    adapter.setCrops(crops);
+                    for (Crop crop: crops) {
+                        cropList.add(crop);
+//                        cropAdapter.notifyItemInserted(cropList.size());
+                    }
+
+                    cropAdapter.notifyDataSetChanged();
+//                    cropList.add(cropVariety);
+
+                } else {
+                    Log.e("Firestore", response.message());
+                }
             }
-        }).addOnFailureListener(e -> Log.e("Firestore", "Error fetching crops: " + e.getMessage()));
+
+            @Override
+            public void onFailure(Call<List<Crop>> call, Throwable t) {
+                // Handle network or other errors
+                Log.e("Firestore", "Error fetching crops: " + t.getMessage());
+            }
+        });
     }
 
     @Override

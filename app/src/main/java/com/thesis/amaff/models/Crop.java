@@ -3,12 +3,16 @@ package com.thesis.amaff.models;
 import java.util.List;
 
 public class Crop {
+    private int id;
     private String name;
     private String description;
     private String variety = "";
     private int count;
-    private List<String> variation;
     private String iconUrl;
+    private String harvest;
+    private List<String> months;
+
+
 
     public Crop() {
         // Empty constructor required for Firestore
@@ -47,14 +51,6 @@ public class Crop {
         this.count = count;
     }
 
-    public List<String> getVariation() {
-        return variation;
-    }
-
-    public void setVariation(List<String> variety) {
-        this.variation = variety;
-    }
-
     public String getVariety() {
         return variety;
     }
@@ -69,5 +65,21 @@ public class Crop {
 
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
+    }
+
+    public String getHarvest() {
+        return harvest;
+    }
+
+    public List<String> getMonths() {
+        return months;
+    }
+
+    public void setMonths(List<String> months) {
+        this.months = months;
+    }
+
+    public int getId() {
+        return id;
     }
 }

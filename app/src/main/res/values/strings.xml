@@ -14,6 +14,7 @@
     <string name="date_created_label">Date Created: %s</string>
     <string name="last_name">Last name</string>
     <string name="first_name">First name</string>
+    <string name="mobile_number">Mobile No.</string>
     <string name="save_profile">Save Profile</string>
     <string name="welcome">Welcome</string>
     <string name="current_weather">24°C</string>

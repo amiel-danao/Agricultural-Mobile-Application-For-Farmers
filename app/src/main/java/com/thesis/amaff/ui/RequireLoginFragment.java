@@ -1,18 +1,13 @@
 package com.thesis.amaff.ui;
 
-import static com.thesis.amaff.utilities.Constants.PROFILE_COLLECTION;
+import static com.thesis.amaff.utilities.Constants.EMPLOYEES_COLLECTION;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
@@ -21,13 +16,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
-import com.thesis.amaff.MainActivity;
 import com.thesis.amaff.R;
-import com.thesis.amaff.models.UserProfile;
+import com.thesis.amaff.models.Employee;
 
 public abstract class RequireLoginFragment extends Fragment {
-    protected UserProfile profile;
+    protected Employee profile;
     private FirebaseAuth firebaseAuth;
     protected String pageTitle = "";
 
@@ -62,11 +55,11 @@ public abstract class RequireLoginFragment extends Fragment {
     }
 
     private void fetchUserData(){
-        FirebaseFirestore.getInstance().collection(PROFILE_COLLECTION).document(firebaseAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        FirebaseFirestore.getInstance().collection(EMPLOYEES_COLLECTION).document(firebaseAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
-                    profile = task.getResult().toObject(UserProfile.class);
+                    profile = task.getResult().toObject(Employee.class);
                     onFetchedUser();
                 }
             }

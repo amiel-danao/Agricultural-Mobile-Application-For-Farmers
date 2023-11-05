@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "112125727173",
-    "project_id": "agriculture-scan",
-    "storage_bucket": "agriculture-scan.appspot.com"
+    "project_number": "1005200614911",
+    "project_id": "amaff-f0630",
+    "storage_bucket": "amaff-f0630.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:112125727173:android:b29975d8b672407d0efbac",
+        "mobilesdk_app_id": "1:1005200614911:android:ba23bf5ed5f396d474b3ca",
         "android_client_info": {
           "package_name": "com.thesis.amaff"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCWPkWfMDtJNeJ-VYFCBZcIvyh8B6ZmClc"
+          "current_key": "AIzaSyCeURcvrKSGCdja5Y4SpMa6_TjWECaSuWM"
         }
       ],
       "services": {

@@ -1,6 +1,6 @@
 package com.thesis.amaff.ui.profile;
 
-import static com.thesis.amaff.utilities.Constants.PROFILE_COLLECTION;
+import static com.thesis.amaff.utilities.Constants.EMPLOYEES_COLLECTION;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.thesis.amaff.R;
 import com.thesis.amaff.databinding.FragmentProfileBinding;
 import com.thesis.amaff.ui.RequireLoginFragment;
-import com.thesis.amaff.models.UserProfile;
+import com.thesis.amaff.models.Employee;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -40,10 +39,10 @@ public class ProfileFragment extends RequireLoginFragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        profileViewModel.getUserProfile().observe(getViewLifecycleOwner(), new Observer<UserProfile>() {
+        profileViewModel.getUserProfile().observe(getViewLifecycleOwner(), new Observer<Employee>() {
             @Override
-            public void onChanged(UserProfile userProfile) {
-                if (userProfile != null) {
+            public void onChanged(Employee employee) {
+                if (employee != null) {
 
                     // Update other TextViews with corresponding profile data
 //                    TextView firstNameTextView = binding.textFirstName;
@@ -66,6 +65,7 @@ public class ProfileFragment extends RequireLoginFragment {
                     binding.textDateCreated.setText("");
                     binding.textFirstName.setText("");
                     binding.textLastName.setText("");
+                    binding.textMobileNumber.setText("");
                 }
             }
         });
@@ -86,7 +86,8 @@ public class ProfileFragment extends RequireLoginFragment {
             binding.buttonSaveProfile.setEnabled(false);
             profile.setFirstName(binding.textFirstName.getText().toString());
             profile.setLastName(binding.textLastName.getText().toString());
-            FirebaseFirestore.getInstance().collection(PROFILE_COLLECTION).document(profile.getUid()).set(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
+            profile.setMobileNumber(binding.textMobileNumber.getText().toString());
+            FirebaseFirestore.getInstance().collection(EMPLOYEES_COLLECTION).document(profile.getUid()).set(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
@@ -129,6 +130,7 @@ public class ProfileFragment extends RequireLoginFragment {
 
         binding.textFirstName.setText(profile.getFirstName());
         binding.textLastName.setText(profile.getLastName());
+        binding.textMobileNumber.setText(profile.getMobileNumber());
     }
 
     @Override
